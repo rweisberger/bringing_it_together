@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grid</title>
+    <style>
+        .on{
+            background: mediumspringgreen;
+        }                
+        .content{
+            display: grid;
+            grid-template-columns: repeat(10,1fr);
+            grid-template-rows: repeat(10,1fr);
+            gap: 5px;
+        }
+        div{
+            padding: 10px;
+            text-align: center;
+            border-style: groove;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="createGrid()">CREATE GRID</button>    
+    <button onclick="move()" style="margin-bottom: 10px;">MOVE</button>
+    <main class="content" id="target">
+    </main>
+    <script>
+        //we must append a new div to the content class. Possibly by looping through naming a creation with 1-100
+        let number = 1
+
+        function createGrid() {
+            while(number <= 100) {
+                let name = 'n' + number;
+                let newDiv = document.createElement("DIV"); //create new div element
+                newDiv.setAttribute("id", name); // div must have an id for the move() to work
+                let numberedDiv = document.createTextNode(number); //add some content to that div, like a number
+                newDiv.appendChild(numberedDiv); //add the text node to the new div
+                document.getElementById("target").appendChild(newDiv); 
+                number += 1
+            }
+        }
+
+        let position = 1; 
+        let position2 = 0
+        function move() {
+            const name ='n' + position;
+            const name2 ='n' + position2;
+            
+            if (position > 100) return;            
+
+
+            let element = document.getElementById(name);
+            element.classList.add('on');
+
+            
+                     
+            if (position <= 100) {
+                position += 1;
+                position2 += 1;
+                setTimeout(move, 200);
+            }
+            
+            if (name2 === 'n0') return;
+            // this has to be here so that div id=n0 is not called
+            let element2 = document.getElementById(name2);
+            element2.classList.remove('on');
+        }
+
+    </script>
+</body>
+</html>
